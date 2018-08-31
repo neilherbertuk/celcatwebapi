@@ -1,0 +1,33 @@
+{
+  "name": "neilherbertuk/celcatwebapi",
+  "description": "Laravel Celcat Web API Integration",
+  "keywords": ["laravel", "Celcat", "Celcat Web API", "laravel 5", "neilherbertuk", "Neil Herbert"],
+  "type": "library",
+  "homepage":"https://github.com/neilherbertuk/celcatwebapi",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Neil Herbert",
+      "email": "neil@ea3.co.uk"
+    }
+  ],
+  "require": {
+    "laravel/framework": "5.*",
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "neilherbertuk\\celcatwebapi\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "neilherbertuk\\celcatwebapi\\CelcatWebAPIServiceProvider"
+      ],
+      "aliases": {
+        "CelcatWebAPI": "neilherbertuk\\celcatwebapi\\Facade\\CelcatWebAPI"
+      }
+    }
+  }
+}
