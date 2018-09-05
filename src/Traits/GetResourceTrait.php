@@ -32,11 +32,13 @@ trait GetResourceTrait
 
     public function getAll($parameters = [])
     {
-        $results = $this->get(['pageSize' => 1000]);
+        $parameters['pageSize'] = 1000;
+        $results = $this->get($parameters);
 
         if($this->hasPagination($results)){
             for($page = 1; $page < $results['pagination']['TotalPages']; $page++){
-                $pageResults = $this->get(['pageSize' => 1000, 'page' => $page]);
+                $parameters['page'] = $page;
+                $pageResults = $this->get($parameters);
 
                 $results['pagination']['CurrentPage'] = $pageResults['parameters']['page'] + 1;
                 unset($pageResults['pagination'], $pageResults['parameters']);
