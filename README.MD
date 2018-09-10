@@ -68,6 +68,11 @@ The following must be provided in order to talk to the Celcat Web API
     CELCAT_WEB_API_DEBUG=false
 ``` 
 
+`Proxy` - Proxy Server Address if required
+```dotenv
+    CELCAT_WEB_API_PROXY=http://localproxy:8080
+```
+
 ## Usage
 
 All of the functionality of this package can be accessed through the ```CelcatWebAPI``` Laravel Facade or using ```app()->make('CelcatWebAPI')```. For the sake of uniformity and ease, all usage examples will access the package via the Laravel Facade.

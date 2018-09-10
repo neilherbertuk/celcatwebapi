@@ -69,4 +69,16 @@ return [
     */
     'DEBUG' => env('CELCAT_WEB_API_DEBUG', false),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Proxy
+    |--------------------------------------------------------------------------
+    |
+    | Proxy Address if you need to make a connection using a proxy server
+    |
+    | Default: null
+    |
+    */
+    'PROXY' => env('CELCAT_WEB_API_PROXY', null),
+
 ];

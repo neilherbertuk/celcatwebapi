@@ -44,6 +44,7 @@ class CelcatWebAPI
             $this->config['VerifySSL'] = $config->get('celcat.VerifySSL');
             $this->config['PEM'] = $config->get('celcat.PEM');
             $this->config['DEBUG'] = $config->get('celcat.DEBUG') ?: false;
+            $this->config['PROXY'] = $config->get('celcat.PROXY') ?: null;
         } else {
             throw new RunTimeException('No config found');
         }
@@ -69,6 +70,9 @@ class CelcatWebAPI
     {
         $this->log()->info("Starting to perform query - resource: {$name} method: {$requestMethod}". (empty($parameters ?: " parameters: ". implode($parameters))));
         $client = new Client();
+        if ($this->config['PROXY']) {
+            $client = new Client(['proxy' => $this->config['PROXY']]);
+        }
 
         $options = $this->buildRequest($requestMethod)->options($parameters);
         $url = $this->buildRequest()->URL($name);
