@@ -93,9 +93,21 @@ You can use any of the below methods on any of the available resources listed ab
 #### Get All
 
 Using the getAll() method on a resource will return all results.
+
 ```php
     CelcatWebAPI::resource()->getAll();
 ```
+
+##### GetAll Optional: pageSize - number of entries to get per request
+By default, getAll() will use a pageSize of 1,000 and perform as many requests as needed to get all results. You can change the pageSize to increase or reduce the number of requests made by including an array within the method signature.
+
+Example
+
+The following will request 100 results per api call until all results have been received.
+```php
+CelcatWebAPI::resource()->getAll(['pageSize' => 100]);
+```
+
 #### Get
 
 Using the get() method on a resource will by default return the first 50 results.
@@ -132,7 +144,7 @@ array:3 [▼
 ```
 
 ##### Get Optional: pageSize - number of results to return
-You can change the number of results returned by including an array within the signature.
+You can change the number of results returned by including an array within the method signature.
 
 Example
 
@@ -172,7 +184,7 @@ array:3 [▼
 ```
 
 ##### Get Optional: page - results page to return
-If the total number of results are higher than that returned, the results become paginated. You can request the page by including an array within the signature.
+If the total number of results are higher than that returned, the results become paginated. You can request the page by including an array within the method signature.
 
 Example
 
