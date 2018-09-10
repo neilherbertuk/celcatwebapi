@@ -79,6 +79,12 @@ return [
     | Default: null
     |
     */
-    'PROXY' => env('CELCAT_WEB_API_PROXY', null),
+    'PROXY' => (empty(env('CELCAT_WEB_API_PROXY', null)) && empty(env('CELCAT_WEB_API_PROXY_HTTP', null)) && empty(env('CELCAT_WEB_API_PROXY_HTTPS', null)) && empty(env('CELCAT_WEB_API_PROXY_NO', null)) ? null :
+        [
+            'http' => (!empty(env('CELCAT_WEB_API_PROXY_HTTP', null)) ? env('CELCAT_WEB_API_PROXY_HTTP', null) : env('CELCAT_WEB_API_PROXY', null)),
+            'https' => (!empty(env('CELCAT_WEB_API_PROXY_HTTPS', null)) ? env('CELCAT_WEB_API_PROXY_HTTPS', null) : env('CELCAT_WEB_API_PROXY', null)),
+            'no' => explode(' ', env('CELCAT_WEB_API_PROXY_BYPASS', null)),
+        ]
+    ),
 
 ];

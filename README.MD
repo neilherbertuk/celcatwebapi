@@ -70,7 +70,14 @@ The following must be provided in order to talk to the Celcat Web API
 
 `Proxy` - Proxy Server Address if required
 ```dotenv
+   -- Used for both http and https --
     CELCAT_WEB_API_PROXY=http://localproxy:8080
+    -- or --
+    CELCAT_WEB_API_PROXY_HTTP=http://localproxy:8080
+    CELCAT_WEB_API_PROXY_HTTPS=https://localproxy:8080
+    
+    -- Bypass proxy for addresses seperated by spaces --
+    CELCAT_WEB_API_PROXY_BYPASS=*.domain.com
 ```
 
 ## Usage

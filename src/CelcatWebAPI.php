@@ -107,14 +107,14 @@ class CelcatWebAPI
         catch (\Exception $exception){
             if($exception instanceof ClientException){
                 if($exception->getCode() == 404) {
-                    $this->log()->info('Received '. $request->getStatusCode());
+                    $this->log()->info('Received '. $exception->getCode());
                     $result['error']['code'] = 404;
                     $result['error']['message'] = "No Results Found";
                     return $result;
                 }
             }
             // TODO - Error Handling
-            $this->log()->error('An error occurred, received a '. $exception->getMessage());
+            $this->log()->error('An error occurred, received a '. $exception->getCode() . ' '. $exception->getMessage());
             $this->log()->transferLogs();
             $this->throwRunTimeException('An error occurred, received a '. $exception->getCode());
         }
