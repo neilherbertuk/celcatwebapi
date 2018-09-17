@@ -73,7 +73,7 @@ class CelcatWebAPI
         if ($this->config['PROXY']) {
             $client = new Client(['proxy' => $this->config['PROXY']]);
             if(!empty($this->config['PROXY']['no'])) {
-                putenv('no_proxy='. $this->config['PROXY']['no']);
+                putenv('no_proxy='. implode(' ,', $this->config['PROXY']['no']));
             }
         }
 

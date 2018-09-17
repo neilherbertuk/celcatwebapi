@@ -50,7 +50,7 @@ class RequestBuilder
                     'Accept' => 'application/json',
                     'Content-type' => 'application/json',
                     'APICode' => $this->config['APICode'],
-                    'TimetableId' => '1'
+                    'TimetableId' => env('CELCAT_WEB_API_TIMETABLE_ID', '1'),
                 ]
         ];
     }
