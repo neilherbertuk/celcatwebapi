@@ -31,7 +31,7 @@ trait GetResourcesTrait
     {
         $this->parameters['pageSize'] = $pagesize;
 
-        $this->celcatWebAPI->log()->info('Getting '. (new \ReflectionClass($this))->getShortName() . (empty($this->parameters) ?: ' with ' . implode($this->parameters)));
+        $this->celcatWebAPI->log()->info('Getting '. (new \ReflectionClass($this))->getShortName());// . (empty($this->parameters) ?: ' with ' . implode(',', $this->parameters)));
         return $this->celcatWebAPI->get((empty($this->name) ? (new \ReflectionClass($this))->getShortName() : $this->name), $this->parameters);
     }
 
