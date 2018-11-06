@@ -83,10 +83,9 @@ class CelcatWebAPI
         try{
             $request = $client->request($requestMethod, $url, $options);
             $header = $request->getHeaders();
+            if($request->getStatusCode() >= 200 and $request->getStatusCode() <= 299) {
 
-            if($request->getStatusCode() == 200) {
-
-                $this->log()->info('Received '. $request->getStatusCode());
+                $this->log()->info('Received ' . $request->getStatusCode());
 
                 // Build object to return
                 // Include pagination details
