@@ -65,11 +65,11 @@ trait GetResourcesTrait
      * @param array $parameters
      * @return mixed
      */
-    public function first($parameters = [])
+    public function first()
     {
-        $parameters['pageSize'] = 1;
-        $parameters['page'] = 0;
-        return $this->get($parameters);
+        $this->parameters['pageSize'] = 1;
+        $this->parameters['page'] = 0;
+        return $this->get();
     }
 
     /**
