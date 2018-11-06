@@ -2,9 +2,9 @@
 
 namespace neilherbertuk\celcatwebapi\Classes;
 
-use neilherbertuk\celcatwebapi\Traits\GetResourceTrait;
+use neilherbertuk\celcatwebapi\Traits\GetResourcesTrait;
 
 class Rooms
 {
-    use GetResourceTrait;
+    use GetResourcesTrait;
 }

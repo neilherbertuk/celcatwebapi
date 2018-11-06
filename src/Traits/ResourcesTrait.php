@@ -29,7 +29,7 @@ trait ResourcesTrait
 
     /**
      * Groups Resource Instance
-     * @return Students
+     * @return Groups
      */
     public function groups()
     {
@@ -38,7 +38,7 @@ trait ResourcesTrait
 
     /**
      * Groups Resource Instance
-     * @return Students
+     * @return StudentMembership
      */
     public function studentMembership()
     {

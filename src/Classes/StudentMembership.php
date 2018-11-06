@@ -2,11 +2,11 @@
 
 namespace neilherbertuk\celcatwebapi\Classes;
 
-use neilherbertuk\celcatwebapi\Traits\GetResourceTrait;
+use neilherbertuk\celcatwebapi\Traits\GetResourcesTrait;
 
 class StudentMembership
 {
-    use GetResourceTrait;
+    use GetResourcesTrait;
 
     protected $name = 'student-membership';
 

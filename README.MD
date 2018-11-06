@@ -106,13 +106,13 @@ Using the getAll() method on a resource will return all results.
 ```
 
 ##### GetAll Optional: pageSize - number of entries to get per request
-By default, getAll() will use a pageSize of 1,000 and perform as many requests as needed to get all results. You can change the pageSize to increase or reduce the number of requests made by including an array within the method signature.
+By default, getAll() will use a pageSize of 1,000 and perform as many requests as needed to get all results. You can change the pageSize to increase or reduce the number of requests made by passing an integer into the `getAll()` operator.
 
 Example
 
 The following will request 100 results per api call until all results have been received.
 ```php
-CelcatWebAPI::resource()->getAll(['pageSize' => 100]);
+CelcatWebAPI::resource()->getAll(100);
 ```
 
 #### Get
@@ -151,13 +151,13 @@ array:3 [▼
 ```
 
 ##### Get Optional: pageSize - number of results to return
-You can change the number of results returned by including an array within the method signature.
+You can change the number of results returned by including an integer within the method signature.
 
 Example
 
 The following will return the first 100 results.
 ```php
-CelcatWebAPI::resource()->get(['pageSize' => 100]);
+CelcatWebAPI::resource()->get(100);
 ```
 
 Result
@@ -191,13 +191,13 @@ array:3 [▼
 ```
 
 ##### Get Optional: page - results page to return
-If the total number of results are higher than that returned, the results become paginated. You can request the page by including an array within the method signature.
+If the total number of results are higher than that returned, the results become paginated. You can request the page by using the `Where()` operator.
 
 Example
 
 The following will return page 2 or results 51 - 100
 ```php
-CelcatWebAPI::resource()->get(['page' => 2]);
+CelcatWebAPI::resource()->where(['page' => 2])->get();
 ```
 
 Result
@@ -230,7 +230,7 @@ array:3 [▼
 
 The following will return page 3 or results 301 - 400
 ```php
-CelcatWebAPI::resource()->get(['page' => 3, 'pageSize' => 100]);
+CelcatWebAPI::resource()->where(['page' => 3])->get(100);
 ```
 
 #### First
@@ -255,6 +255,35 @@ array:3 [▼
   "data" => array:1 [▼
     0 => array:2 [▼
       "id" => 0
+      "name" => "Some Name"
+    ]
+  ]
+]
+```
+
+#### Where
+
+The where operator allows you to define parameters for a query. Setting parameters on the `get` and `getAll` operators have been removed.
+
+```php
+CelcatWebAPI::resource()->where(['uniqueName' => '1234'])->get();
+```
+
+```
+array:3 [▼
+  "pagination" => array:3 [▼
+    "TotalRows" => 2103
+    "TotalPages" => 2103
+    "CurrentPage" => 0
+  ]
+  "parameters" => array:2 [▼
+    "pageSize" => 1
+    "page" => 0
+  ]
+  "data" => array:1 [▼
+    0 => array:2 [▼
+      "id" => 0
+      "uniqueName" => "1234"
       "name" => "Some Name"
     ]
   ]

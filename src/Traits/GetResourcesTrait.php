@@ -4,15 +4,17 @@ namespace neilherbertuk\celcatwebapi\Traits;
 
 use neilherbertuk\celcatwebapi\CelcatWebAPI;
 
-trait GetResourceTrait
+trait GetResourcesTrait
 {
     /**
      * @var
      */
     protected $celcatWebAPI;
 
+    protected $parameters = [];
+
     /**
-     * GetResourceTrait constructor.
+     * GetResourcesTrait constructor.
      * @param CelcatWebAPI $celcatWebAPI
      */
     public function __construct(CelcatWebAPI $celcatWebAPI)
@@ -21,24 +23,33 @@ trait GetResourceTrait
     }
 
     /**
-     * @param array $parameters
+     * Get Operator - Performs a single request for a resource
+     *
      * @return mixed
      */
-    public function get($parameters = [])
+    public function get($pagesize = 50)
     {
-        $this->celcatWebAPI->log()->info('Getting '. (new \ReflectionClass($this))->getShortName() . (empty($parameters) ?: ' with ' . implode($parameters)));
-        return $this->celcatWebAPI->get((empty($this->name) ? (new \ReflectionClass($this))->getShortName() : $this->name), $parameters);
+        $this->parameters['pageSize'] = $pagesize;
+
+        $this->celcatWebAPI->log()->info('Getting '. (new \ReflectionClass($this))->getShortName() . (empty($this->parameters) ?: ' with ' . implode($this->parameters)));
+        return $this->celcatWebAPI->get((empty($this->name) ? (new \ReflectionClass($this))->getShortName() : $this->name), $this->parameters);
     }
 
-    public function getAll($parameters = [])
+    /**
+     * GetAll Operator - Uses the get operator and pagination results to request all results for a resource
+     *
+     * @param int $pagesize
+     * @return array|mixed
+     */
+    public function getAll($pagesize = 1000)
     {
-        $parameters['pageSize'] = 1000;
-        $results = $this->get($parameters);
+        $this->parameters['pageSize'] = $pagesize;
+        $results = $this->get();
 
         if($this->hasPagination($results)){
             for($page = 1; $page < $results['pagination']['TotalPages']; $page++){
-                $parameters['page'] = $page;
-                $pageResults = $this->get($parameters);
+                $this->parameters['page'] = $page;
+                $pageResults = $this->get();
 
                 $results['pagination']['CurrentPage'] = $pageResults['parameters']['page'] + 1;
                 unset($pageResults['pagination'], $pageResults['parameters']);
@@ -49,6 +60,8 @@ trait GetResourceTrait
     }
 
     /**
+     * First Operator - Requests the first element of a resource
+     *
      * @param array $parameters
      * @return mixed
      */
@@ -73,6 +86,12 @@ trait GetResourceTrait
         print "Method $method called:\n";
         var_dump($args);
         return;
+    }
+
+    public function where($parameters = [])
+    {
+        $this->parameters = array_merge($this->parameters, $parameters);
+        return $this;
     }
 
 }
