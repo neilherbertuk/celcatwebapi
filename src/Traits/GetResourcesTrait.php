@@ -29,7 +29,8 @@ trait GetResourcesTrait
      */
     public function get($pagesize = 50)
     {
-        $this->parameters['pageSize'] = $pagesize;
+        if (empty($this->parameters['pageSize']))
+            $this->parameters['pageSize'] = $pagesize;
 
         $this->celcatWebAPI->log()->info('Getting '. (new \ReflectionClass($this))->getShortName());// . (empty($this->parameters) ?: ' with ' . implode(',', $this->parameters)));
         return $this->celcatWebAPI->get((empty($this->name) ? (new \ReflectionClass($this))->getShortName() : $this->name), $this->parameters);
@@ -43,7 +44,9 @@ trait GetResourcesTrait
      */
     public function getAll($pagesize = 1000)
     {
-        $this->parameters['pageSize'] = $pagesize;
+        if (empty($this->parameters['pageSize']))
+            $this->parameters['pageSize'] = $pagesize;
+
         $results = $this->get();
 
         if($this->hasPagination($results)){
