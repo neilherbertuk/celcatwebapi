@@ -9,18 +9,18 @@ use Illuminate\Config\Repository as Config;
 use neilherbertuk\celcatwebapi\Classes\RequestBuilder;
 use neilherbertuk\celcatwebapi\Classes\Log;
 use neilherbertuk\celcatwebapi\Traits\ResourcesTrait;
-use RuntimeException;
 
 class CelcatWebAPI
 {
     use ResourcesTrait;
+
     /**
-     * @var - Stores instance of config settings
+     * @var
      */
     private $config;
 
     /**
-     * @var - Stores log entries to output in case of error
+     * @var
      */
     public $logs;
 
@@ -46,7 +46,7 @@ class CelcatWebAPI
             $this->config['DEBUG'] = $config->get('celcat.DEBUG') ?: false;
             $this->config['PROXY'] = $config->get('celcat.PROXY') ?: null;
         } else {
-            throw new RunTimeException('No config found');
+            $this->throwRunTimeException('No config found');
         }
     }
 
@@ -55,7 +55,7 @@ class CelcatWebAPI
      */
     private function throwRunTimeException($exceptionMessage)
     {
-        throw new RuntimeException($exceptionMessage);
+        throw new \RuntimeException($exceptionMessage);
     }
 
     /**
@@ -65,6 +65,7 @@ class CelcatWebAPI
      * @param string $requestMethod
      * @param array $parameters
      * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function query($name, $requestMethod = 'GET', $parameters = [])
     {
@@ -104,6 +105,7 @@ class CelcatWebAPI
                 $this->log()->error('An error occurred, received a '.$request->getStatusCode());
                 $this->log()->transferLogs();
                 $this->throwRunTimeException('An error occurred, received a '.$request->getStatusCode());
+                return null;
             }
         }
         catch (\Exception $exception) {
@@ -119,6 +121,7 @@ class CelcatWebAPI
             $this->log()->error('An error occurred, received a '.$exception->getCode().' '.$exception->getMessage());
             $this->log()->transferLogs();
             $this->throwRunTimeException('An error occurred, received a '.$exception->getCode());
+            return null;
         }
     }
 
@@ -138,10 +141,11 @@ class CelcatWebAPI
      * @param $name
      * @param array $parameters
      * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function get($name, $parameters = [])
     {
-        return self::query($name, 'GET', $parameters);
+        return $this->query($name, 'GET', $parameters);
     }
 
     /**
