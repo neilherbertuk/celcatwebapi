@@ -29,10 +29,11 @@ trait GetResourcesTrait
      */
     public function get($pagesize = 50)
     {
-        if (empty($this->parameters['pageSize']))
-            $this->parameters['pageSize'] = $pagesize;
+        if (empty($this->parameters['pageSize'])) {
+                    $this->parameters['pageSize'] = $pagesize;
+        }
 
-        $this->celcatWebAPI->log()->info('Getting '. (new \ReflectionClass($this))->getShortName());// . (empty($this->parameters) ?: ' with ' . implode(',', $this->parameters)));
+        $this->celcatWebAPI->log()->info('Getting '.(new \ReflectionClass($this))->getShortName()); // . (empty($this->parameters) ?: ' with ' . implode(',', $this->parameters)));
         return $this->celcatWebAPI->get((empty($this->name) ? (new \ReflectionClass($this))->getShortName() : $this->name), $this->parameters);
     }
 
@@ -44,13 +45,14 @@ trait GetResourcesTrait
      */
     public function getAll($pagesize = 1000)
     {
-        if (empty($this->parameters['pageSize']))
-            $this->parameters['pageSize'] = $pagesize;
+        if (empty($this->parameters['pageSize'])) {
+                    $this->parameters['pageSize'] = $pagesize;
+        }
 
         $results = $this->get();
 
-        if($this->hasPagination($results)){
-            for($page = 1; $page < $results['pagination']['TotalPages']; $page++){
+        if ($this->hasPagination($results)) {
+            for ($page = 1; $page < $results['pagination']['TotalPages']; $page++) {
                 $this->parameters['page'] = $page;
                 $pageResults = $this->get();
 

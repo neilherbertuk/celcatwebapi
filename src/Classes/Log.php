@@ -45,9 +45,9 @@ class Log
     {
         foreach ($this->celcatWebAPI->logs as $log) {
             if ($log['type'] == "info") {
-                Logs::info("Celcat Web API: ". $log['string']);
+                Logs::info("Celcat Web API: ".$log['string']);
             } else if ($log['type'] == "error") {
-                Logs::error("Celcat Web API: ". $log['string']);
+                Logs::error("Celcat Web API: ".$log['string']);
             }
         }
     }
