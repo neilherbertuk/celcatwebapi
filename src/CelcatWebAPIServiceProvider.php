@@ -36,11 +36,11 @@ class CelcatWebAPIServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/Config/config.php',
+            __DIR__.'/Config/config.php',
             'celcat'
         );
 
-        $this->app->singleton('CelcatWebAPI', function($app){
+        $this->app->singleton('CelcatWebAPI', function($app) {
             return new CelcatWebAPI($app['config']);
         });
     }
@@ -52,7 +52,7 @@ class CelcatWebAPIServiceProvider extends ServiceProvider
     {
         if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/Config/config.php' => config_path('celcat.php'),
+                __DIR__.'/Config/config.php' => config_path('celcat.php'),
             ], "config");
         }
     }

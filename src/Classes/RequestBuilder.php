@@ -92,6 +92,6 @@ class RequestBuilder
      */
     public function URL($name)
     {
-        return rtrim($this->config['ServerAddress'], '/') . '/' . $name;
+        return rtrim($this->config['ServerAddress'], '/').'/'.$name;
     }
 }

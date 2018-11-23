@@ -68,24 +68,24 @@ class CelcatWebAPI
      */
     private function query($name, $requestMethod = 'GET', $parameters = [])
     {
-        $this->log()->info("Starting to perform query - resource: {$name} method: {$requestMethod}". (empty($parameters ?: " parameters: ". implode($parameters))));
+        $this->log()->info("Starting to perform query - resource: {$name} method: {$requestMethod}".(empty($parameters ?: " parameters: ".implode($parameters))));
         $client = new Client();
         if ($this->config['PROXY']) {
             $client = new Client(['proxy' => $this->config['PROXY']]);
-            if(!empty($this->config['PROXY']['no'])) {
-                putenv('no_proxy='. implode(' ,', $this->config['PROXY']['no']));
+            if (!empty($this->config['PROXY']['no'])) {
+                putenv('no_proxy='.implode(' ,', $this->config['PROXY']['no']));
             }
         }
 
         $options = $this->buildRequest($requestMethod)->options($parameters);
         $url = $this->buildRequest()->URL($name);
 
-        try{
+        try {
             $request = $client->request($requestMethod, $url, $options);
             $header = $request->getHeaders();
-            if($request->getStatusCode() >= 200 and $request->getStatusCode() <= 299) {
+            if ($request->getStatusCode() >= 200 and $request->getStatusCode() <= 299) {
 
-                $this->log()->info('Received ' . $request->getStatusCode());
+                $this->log()->info('Received '.$request->getStatusCode());
 
                 // Build object to return
                 // Include pagination details
@@ -101,24 +101,24 @@ class CelcatWebAPI
                 return $result;
             } else {
                 // TODO - Error Handling
-                $this->log()->error('An error occurred, received a '. $request->getStatusCode());
+                $this->log()->error('An error occurred, received a '.$request->getStatusCode());
                 $this->log()->transferLogs();
-                $this->throwRunTimeException('An error occurred, received a '. $request->getStatusCode());
+                $this->throwRunTimeException('An error occurred, received a '.$request->getStatusCode());
             }
         }
-        catch (\Exception $exception){
-            if($exception instanceof ClientException){
-                if($exception->getCode() == 404) {
-                    $this->log()->info('Received '. $exception->getCode());
+        catch (\Exception $exception) {
+            if ($exception instanceof ClientException) {
+                if ($exception->getCode() == 404) {
+                    $this->log()->info('Received '.$exception->getCode());
                     $result['error']['code'] = 404;
                     $result['error']['message'] = "No Results Found";
                     return $result;
                 }
             }
             // TODO - Error Handling
-            $this->log()->error('An error occurred, received a '. $exception->getCode() . ' '. $exception->getMessage());
+            $this->log()->error('An error occurred, received a '.$exception->getCode().' '.$exception->getMessage());
             $this->log()->transferLogs();
-            $this->throwRunTimeException('An error occurred, received a '. $exception->getCode());
+            $this->throwRunTimeException('An error occurred, received a '.$exception->getCode());
         }
     }
 
@@ -128,7 +128,7 @@ class CelcatWebAPI
      * @param string $requestMethod
      * @return RequestBuilder
      */
-    private function buildRequest($requestMethod = 'GET'){
+    private function buildRequest($requestMethod = 'GET') {
         return new RequestBuilder($requestMethod, $this->config);
     }
 
@@ -149,7 +149,7 @@ class CelcatWebAPI
      *
      * @return Log
      */
-    public function log(){
+    public function log() {
         return new Log($this);
     }
 
