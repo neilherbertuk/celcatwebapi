@@ -89,6 +89,8 @@ class CelcatWebAPI
                 $this->log()->info('Received '.$request->getStatusCode());
 
                 // Build object to return
+                $result = [];
+
                 // Include pagination details
                 if ($header['Pagination'] !== null) {
                     $result['pagination'] = json_decode($header['Pagination'][0], true);
