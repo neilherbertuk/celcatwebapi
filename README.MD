@@ -1,6 +1,8 @@
 Laravel Celcat Web API Integration
 ===============
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/neilherbertuk/celcatwebapi/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/neilherbertuk/celcatwebapi/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/neilherbertuk/celcatwebapi/badges/build.png?b=master)](https://scrutinizer-ci.com/g/neilherbertuk/celcatwebapi/build-status/master)
+
 This package provides access to the Celcat Web API as documented on the [Celcat Wiki - Web API](https://www.celcat.wiki/en/guides/developers_guides/webapi/webapi) page. This package has only been tested with Celcat 7 where the WebAPI is in beta. 
 
 ## Installation
