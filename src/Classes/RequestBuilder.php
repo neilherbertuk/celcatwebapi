@@ -66,7 +66,7 @@ class RequestBuilder
                 return ['verify' => $this->config['PEM']];
             } else {
                 // TODO - Error Handling
-                throw new RuntimeException('PEM Certificate does not exist');
+                throw new \RuntimeException('PEM Certificate does not exist');
             }
         }
         return ['verify' => false];
@@ -78,6 +78,8 @@ class RequestBuilder
      */
     protected function parameters($parameters)
     {
+        $options = [];
+
         if ($this->requestMethod == "GET") {
             $options['query'] = $parameters;
         } else {
