@@ -4,6 +4,10 @@ namespace neilherbertuk\celcatwebapi\Traits;
 
 use neilherbertuk\celcatwebapi\CelcatWebAPI;
 
+/**
+ * Trait GetResourcesTrait
+ * @package neilherbertuk\celcatwebapi\Traits
+ */
 trait GetResourcesTrait
 {
     /**
@@ -11,6 +15,9 @@ trait GetResourcesTrait
      */
     protected $celcatWebAPI;
 
+    /**
+     * @var array
+     */
     protected $parameters = [];
 
     /**
@@ -25,28 +32,31 @@ trait GetResourcesTrait
     /**
      * Get Operator - Performs a single request for a resource
      *
+     * @param int $pageSize
      * @return mixed
+     * @throws \ReflectionException
      */
-    public function get($pagesize = 50)
+    public function get($pageSize = 50)
     {
         if (empty($this->parameters['pageSize'])) {
-                    $this->parameters['pageSize'] = $pagesize;
+            $this->parameters['pageSize'] = $pageSize;
         }
 
-        $this->celcatWebAPI->log()->info('Getting '.(new \ReflectionClass($this))->getShortName()); // . (empty($this->parameters) ?: ' with ' . implode(',', $this->parameters)));
+        $this->celcatWebAPI->log()->info('Getting '.(new \ReflectionClass($this))->getShortName());
         return $this->celcatWebAPI->get((empty($this->name) ? (new \ReflectionClass($this))->getShortName() : $this->name), $this->parameters);
     }
 
     /**
      * GetAll Operator - Uses the get operator and pagination results to request all results for a resource
      *
-     * @param int $pagesize
+     * @param int $pageSize
      * @return array|mixed
+     * @throws \ReflectionException
      */
-    public function getAll($pagesize = 1000)
+    public function getAll($pageSize = 1000)
     {
         if (empty($this->parameters['pageSize'])) {
-                    $this->parameters['pageSize'] = $pagesize;
+            $this->parameters['pageSize'] = $pageSize;
         }
 
         $results = $this->get();
@@ -67,8 +77,8 @@ trait GetResourcesTrait
     /**
      * First Operator - Requests the first element of a resource
      *
-     * @param array $parameters
      * @return mixed
+     * @throws \ReflectionException
      */
     public function first()
     {
@@ -78,6 +88,20 @@ trait GetResourcesTrait
     }
 
     /**
+     * Where Operator - Chainable method to add parameters to requests
+     *
+     * @param array $parameters
+     * @return $this
+     */
+    public function where($parameters = [])
+    {
+        $this->parameters = array_merge($this->parameters, $parameters);
+        return $this;
+    }
+
+    /**
+     * Does the result have pagination?
+     *
      * @param $results
      * @return bool
      */
@@ -85,18 +109,4 @@ trait GetResourcesTrait
     {
         return !empty($results['pagination']['TotalPages']);
     }
-
-    public function __call($method, $args)
-    {
-        print "Method $method called:\n";
-        var_dump($args);
-        return;
-    }
-
-    public function where($parameters = [])
-    {
-        $this->parameters = array_merge($this->parameters, $parameters);
-        return $this;
-    }
-
 }
