@@ -103,8 +103,7 @@ class CelcatWebAPI
                 $this->throwRunTimeException('An error occurred, received a '.$request->getStatusCode());
                 return null;
             }
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             if ($exception instanceof ClientException) {
                 if ($exception->getCode() == 404) {
                     $this->log()->info('Received '.$exception->getCode());
@@ -131,7 +130,7 @@ class CelcatWebAPI
         if ($this->config['PROXY']) {
             $client = new Client(['proxy' => $this->config['PROXY']]);
             if (!empty($this->config['PROXY']['no'])) {
-                putenv('no_proxy=' . implode(' ,', $this->config['PROXY']['no']));
+                putenv('no_proxy=' .implode(' ,', $this->config['PROXY']['no']));
             }
 
             return $client;

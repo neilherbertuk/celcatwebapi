@@ -11,7 +11,7 @@ class Log
     protected $celcatWebAPI;
 
     /**
-     * Rooms constructor.
+     * Log constructor
      * @param $celcatWebAPI
      */
     public function __construct($celcatWebAPI)
@@ -20,7 +20,7 @@ class Log
     }
 
     /**
-     * Adds string to logs array.
+     * Adds string to logs array
      *
      * @param  string  $string
      * @return void
