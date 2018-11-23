@@ -70,14 +70,8 @@ class CelcatWebAPI
     private function query($name, $requestMethod = 'GET', $parameters = [])
     {
         $this->log()->info("Starting to perform query - resource: {$name} method: {$requestMethod}".(empty($parameters ?: " parameters: ".implode($parameters))));
-        $client = new Client();
-        if ($this->config['PROXY']) {
-            $client = new Client(['proxy' => $this->config['PROXY']]);
-            if (!empty($this->config['PROXY']['no'])) {
-                putenv('no_proxy='.implode(' ,', $this->config['PROXY']['no']));
-            }
-        }
 
+        $client = $this->buildClient();
         $options = $this->buildRequest($requestMethod)->options($parameters);
         $url = $this->buildRequest()->URL($name);
 
@@ -125,6 +119,24 @@ class CelcatWebAPI
             $this->throwRunTimeException('An error occurred, received a '.$exception->getCode());
             return null;
         }
+    }
+
+    /**
+     * Build HTTP Client and add proxy config if required
+     *
+     * @return Client
+     */
+    private function buildClient()
+    {
+        if ($this->config['PROXY']) {
+            $client = new Client(['proxy' => $this->config['PROXY']]);
+            if (!empty($this->config['PROXY']['no'])) {
+                putenv('no_proxy=' . implode(' ,', $this->config['PROXY']['no']));
+            }
+
+            return $client;
+        }
+        return new Client();
     }
 
     /**
