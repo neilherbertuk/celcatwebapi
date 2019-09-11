@@ -36,10 +36,11 @@ trait GetResourcesTrait
      * @return mixed
      * @throws \ReflectionException
      */
-    public function get($pageSize = 50)
+    public function get($parameters = [])
     {
+	$this->parameters = array_merge($this->parameters, $parameters);
         if (empty($this->parameters['pageSize'])) {
-            $this->parameters['pageSize'] = $pageSize;
+            $this->parameters['pageSize'] = 50;
         }
 
         $this->celcatWebAPI->log()->info('Getting '.(new \ReflectionClass($this))->getShortName());
@@ -53,10 +54,12 @@ trait GetResourcesTrait
      * @return array|mixed
      * @throws \ReflectionException
      */
-    public function getAll($pageSize = 1000)
+    public function getAll($parameters = [])
     {
+
+	$this->parameters = array_merge($this->parameters, $parameters);	
         if (empty($this->parameters['pageSize'])) {
-            $this->parameters['pageSize'] = $pageSize;
+            $this->parameters['pageSize'] = 1000;
         }
 
         $results = $this->get();

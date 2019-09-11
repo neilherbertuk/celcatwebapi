@@ -56,7 +56,6 @@ class RequestBuilder
     }
 
     /**
-     * @param $options
      * @return mixed
      */
     protected function SSLOptions()
